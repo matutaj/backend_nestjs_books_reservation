@@ -7,8 +7,71 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model RocketTeamMember {
-  id       String @id
-  name     String
-  function String
+model Client {
+  id   String @id @default(uuid())
+  name String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Reserve   Reserve[]
+  Contact   Contact[]
+  Login     Login[]
+}
+
+model Book {
+  id         String   @id @default(uuid())
+  name       String
+  produtDate DateTime
+  author     String
+  price      Decimal
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Reserve   Reserve[]
+}
+
+model Reserve {
+  id       String @id @default(uuid())
+  clientId String
+  bookId   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Contact {
+  id            String @id @default(uuid())
+  contact       String
+  clientId      String
+  typeContactId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  TypeContact TypeContact @relation(fields: [typeContactId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Client      Client      @relation(fields: [clientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model TypeContact {
+  id   String @id @default(uuid())
+  type String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Contact Contact[]
+}
+
+model Login {
+  id       String @id @default(uuid())
+  email    String
+  password String
+  clientId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
