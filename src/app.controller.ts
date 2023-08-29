@@ -9,7 +9,7 @@ export class AppController {
 
   @Post("client")
   async Createclient(@Body() body: CreateClientBody) {
-    const { name } = body
+    const { name, contact } = body
     await this.clientRepository.create(name)
 
   }
