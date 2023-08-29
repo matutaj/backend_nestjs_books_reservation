@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { PrismaService } from './database/prisma.service';
-import { RocketTeamMember } from './repositories/Rocket-member-repository';
-import { PrismarocketMemberRepository } from './repositories/prisma/Prisma-Rocket-Member-Repository';
+import { IClinetRepository } from './repositories/Rocket-client-repository';
+import { PrismaClientRepository } from './repositories/prisma/Prisma-client';
 
 @Module({
   imports: [],
   controllers: [AppController],
   providers: [PrismaService,
     {
-      provide: RocketTeamMember,
-      useClass: PrismarocketMemberRepository
+      provide: IClinetRepository,
+      useClass: PrismaClientRepository
     }
   ]
 })
