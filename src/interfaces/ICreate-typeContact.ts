@@ -5,11 +5,11 @@ export interface IType_contactData {
   type: string;
 }
 
-export interface IType_contact {
-  create({}: IType_contactData): Promise<TypeContact>;
-  getAllTypeContact(): Promise<TypeContact[]>;
-  getTypeContactById(id: string): Promise<TypeContact | undefined>;
-  getTypeContactByType(type: string): Promise<TypeContact | undefined>;
-  update({}: IType_contactData): Promise<TypeContact>;
-  delete(id: string): Promise<void>;
+export abstract class IType_contact {
+  abstract create({}: IType_contactData): Promise<TypeContact>;
+  abstract getAllTypeContact(): Promise<TypeContact[]>;
+  abstract getTypeContactById(id: string): Promise<TypeContact | undefined>;
+  abstract getTypeContactByType(type: string): Promise<TypeContact | undefined>;
+  abstract update({}: IType_contactData): Promise<TypeContact>;
+  abstract delete(id: string): Promise<void>;
 }
