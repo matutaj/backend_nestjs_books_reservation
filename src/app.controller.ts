@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { CreateClientBody } from './dtos/create-client';
 import { IClinetRepository } from './repositories/Rocket-client-repository';
 import { Response } from 'express';
@@ -8,21 +8,21 @@ export class AppController {
   constructor(private clientRepository: IClinetRepository) {}
 
   @Post('client')
-  async Createclient(@Body() body: CreateClientBody, res: Response) {
+  async Createclient(@Body() body: CreateClientBody, @Res() res: Response) {
     const { name, contact } = body;
 
     const ExistName = await this.clientRepository.getByName(name);
-    if (ExistName) throw new Error('Already Exist This Name!');
+    if (ExistName) res.status(404).json('Already Exist This Name!');
 
     const createUse = await this.clientRepository.create(name);
 
-    return res.status(200).json(createUse);
+    return createUse;
   }
 
   @Get('client')
-  async GetClient(res: Response) {
+  async GetClient() {
     const getUser = await this.clientRepository.getClient();
 
-    return res.status(200).json(getUser);
+    return getUser;
   }
 }
