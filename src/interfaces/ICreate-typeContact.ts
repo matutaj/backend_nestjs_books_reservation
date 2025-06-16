@@ -7,9 +7,9 @@ export interface IType_contactData {
 
 export interface IType_contact {
   create({}: IType_contactData): Promise<TypeContact>;
-  getAllTypeContact(): Promise<TypeContact | undefined>;
+  getAllTypeContact(): Promise<TypeContact[]>;
   getTypeContactById(id: string): Promise<TypeContact | undefined>;
-  gitTypeContactByType(type: string): Promise<TypeContact | undefined>;
+  getTypeContactByType(type: string): Promise<TypeContact | undefined>;
   update({}: IType_contactData): Promise<TypeContact>;
   delete(id: string): Promise<void>;
 }
